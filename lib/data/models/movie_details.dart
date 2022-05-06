@@ -1,7 +1,7 @@
-
 import 'genre.dart';
 
 class MovieDetails {
+ 
   int id;
   num popularity;
   String title;
@@ -47,7 +47,8 @@ class MovieDetails {
         status = json['status'] ?? "",
         runtime = json['runtime'] ?? 0;
 
-  static var empty =MovieDetails(0, 0, "", "", "", "", 0.0, "", [], 0, 0, "", 0);
+  static var empty =
+      MovieDetails(0, 0, "", "", "", "", 0.0, "", [], 0, 0, "", 0);
 }
 
 class MovieDetailsReponse {
@@ -59,6 +60,6 @@ class MovieDetailsReponse {
         error = "";
 
   MovieDetailsReponse.withError(String errorValue)
-      : movieDetails =MovieDetails.empty,
+      : movieDetails = MovieDetails.empty,
         error = errorValue;
 }

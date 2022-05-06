@@ -14,8 +14,10 @@ class NowshowingBloc extends Bloc<NowshowingEvent, NowshowingState> {
       if (event is FetchNowShowingMovie) {
         emit(NowShowingMovieLoading());
         try {
-          final MovieResponse response = await repository.getNowShowingMovie();
-          emit(NowShowingMovieLoaded(movie: response.movies));
+          final MovieResponse response = await repository.getNowShowingMovie(1);
+
+          emit(NowShowingMovieLoaded(
+              movie: response.movies, totalPages: response.totalPages));
         } catch (error) {
           emit(NowShowingMovieFailure(error: error.toString()));
         }

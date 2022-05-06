@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:e_movie/data/datasources/urls.dart';
 import 'package:e_movie/data/models/cast.dart';
+import 'package:e_movie/data/models/genre.dart';
 import 'package:e_movie/data/models/movie.dart';
 import 'package:e_movie/data/models/movie_details.dart';
 
@@ -19,9 +20,10 @@ class MovieRepository {
     }
   }
 
-  Future<MovieResponse> getNowShowingMovie() async {
-    var params = {"api_key": Urls.apiKey, "language": "en-US", "page": 1};
+  Future<MovieResponse> getNowShowingMovie(int page) async {
+    var params = {"api_key": Urls.apiKey, "language": "en-US", "page": page};
     try {
+      
       Response response =
           await _dio.get(Urls.getNowPlayingMoviesApi, queryParameters: params);
       return MovieResponse.fromJson(response.data);
@@ -84,6 +86,17 @@ class MovieRepository {
       return CastResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       return CastResponse.withError("Error:$error,StackTrace:$stacktrace");
+    }
+  }
+
+  Future<GenreResponse> getGenreList() async {
+    var params = {'api_key': Urls.apiKey, 'language': 'en-US'};
+    try {
+      Response response =
+          await _dio.get(Urls.getGenresUrl, queryParameters: params);
+      return GenreResponse.fromJson(response.data);
+    } catch (error, stacktrace) {
+      return GenreResponse.withError("Error:$error,StackTrace:$stacktrace");
     }
   }
 }

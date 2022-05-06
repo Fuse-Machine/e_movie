@@ -9,8 +9,9 @@ class NowShowingMovieLoading extends NowshowingState {}
 
 // ignore: must_be_immutable
 class NowShowingMovieLoaded extends NowshowingState {
+  int totalPages;
   List<Movie> movie;
-  NowShowingMovieLoaded({required this.movie});
+  NowShowingMovieLoaded({required this.movie,required this.totalPages});
 }
 
 // ignore: must_be_immutable

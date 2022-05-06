@@ -35,17 +35,15 @@ class UpcomingMovie extends StatelessWidget {
                           child: SafeArea(
                             child: Column(
                               children: [
-                                 Text(
+                                Text(
                                   "Release date: ",
-                                 style:
+                                  style:
                                       Theme.of(context).textTheme.titleMedium,
-                                 
                                 ),
                                 Text(
                                   movie.releaseDate,
                                   style:
                                       Theme.of(context).textTheme.titleMedium,
-                                 
                                 ),
                               ],
                             ),
@@ -61,11 +59,6 @@ class UpcomingMovie extends StatelessWidget {
               child: Text(
                 "Upcoming movies",
                 style: Theme.of(context).textTheme.titleLarge,
-                // style: TextStyle(
-                //   fontFamily: 'NunitoBold',
-                //   fontSize: 18.0,
-                //   color: Colors.white.withOpacity(0.5),
-                // ),
               ),
             )),
       ],

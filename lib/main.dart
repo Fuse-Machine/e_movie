@@ -1,11 +1,6 @@
-import 'package:e_movie/data/repositories/movie_repository.dart';
-import 'package:e_movie/presentation/bloc/SimilarMovie/similar_movie_bloc.dart';
-
+import 'package:e_movie/data/repositories/repositories.dart';
 import 'package:e_movie/presentation/bloc/bloc.dart';
-import 'package:e_movie/presentation/bloc/cast/cast_bloc.dart';
-import 'package:e_movie/presentation/bloc/movieDetails/movie_details_bloc.dart';
-
-import 'package:e_movie/presentation/view/landing_page.dart';
+import 'package:e_movie/presentation/view/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,33 +29,50 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: Colors.blue,
       ),
-      home: MultiBlocProvider(providers: [
-        BlocProvider<UpcomingBloc>(
-          create: (context) => UpcomingBloc(repository: MovieRepository())
-            ..add(FetchUpcomingMovie()),
-        ),
-        BlocProvider<NowshowingBloc>(
-          create: (context) => NowshowingBloc(repository: MovieRepository())
-            ..add(FetchNowShowingMovie()),
-        ),
-        BlocProvider<PopularBloc>(
-          create: (context) => PopularBloc(repository: MovieRepository())
-            ..add(FetchPopularMovie()),
-        ),
-        BlocProvider<AlltimeTopratedBloc>(
-          create: (context) =>
-              AlltimeTopratedBloc(repository: MovieRepository())
-                ..add(FetchAllTimeTopRatedMovie()),
-        ),
-        BlocProvider<MovieDetailsBloc>(
-            create: ((context) =>
-                MovieDetailsBloc(repository: MovieRepository()))),
-        BlocProvider<SimilarMovieBloc>(
-            create: ((context) =>
-                SimilarMovieBloc(repository: MovieRepository()))),
-        BlocProvider<CastBloc>(
-            create: ((context) => CastBloc(repository: MovieRepository()))),
-      ], child: const LandingPage()),
+      home: _multiBlocProvider(context),
     );
+  }
+
+  _multiBlocProvider(BuildContext context) {
+    return MultiBlocProvider(providers: [
+      BlocProvider<UpcomingBloc>(
+        create: (context) => UpcomingBloc(repository: MovieRepository())
+          ..add(FetchUpcomingMovie()),
+      ),
+      BlocProvider<NowshowingBloc>(
+        create: (context) => NowshowingBloc(repository: MovieRepository())
+          ..add(FetchNowShowingMovie()),
+      ),
+      BlocProvider<PopularBloc>(
+        create: (context) => PopularBloc(repository: MovieRepository())
+          ..add(FetchPopularMovie()),
+      ),
+      BlocProvider<AlltimeTopratedBloc>(
+        create: (context) => AlltimeTopratedBloc(repository: MovieRepository())
+          ..add(FetchAllTimeTopRatedMovie()),
+      ),
+      BlocProvider<MovieDetailsBloc>(
+          create: ((context) =>
+              MovieDetailsBloc(repository: MovieRepository()))),
+      BlocProvider<CastBloc>(
+          create: ((context) => CastBloc(repository: MovieRepository()))),
+      BlocProvider<SimilarMovieBloc>(
+          create: ((context) =>
+              SimilarMovieBloc(repository: MovieRepository()))),
+      BlocProvider<TvPopularBloc>(
+          create: ((context) => TvPopularBloc(repository: TvRepository())
+            ..add(FetchPopularTV()))),
+      BlocProvider<TvTopRatedBloc>(
+          create: ((context) => TvTopRatedBloc(repository: TvRepository())
+            ..add(FetchTvTopRated()))),
+      BlocProvider<MovieTrailerBloc>(
+          create: ((context) =>
+              MovieTrailerBloc(repository: MovieTrailerRepository()))),
+      BlocProvider<MovieFilterBloc>(
+          create: (context) => MovieFilterBloc(repository: MovieRepository())
+            ..add(FetchGenre())),
+      BlocProvider<MoviePageBloc>(
+          create: ((context) => MoviePageBloc(repository: MovieRepository()))),
+    ], child: const FrontPage());
   }
 }

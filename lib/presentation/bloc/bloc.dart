@@ -1,4 +1,13 @@
 export 'package:e_movie/presentation/bloc/upcoming/upcoming_bloc.dart';
-export 'package:e_movie/presentation/bloc/alltime_toprated/alltime_toprated_bloc.dart';
+export 'package:e_movie/presentation/bloc/alltimeToprated/alltime_toprated_bloc.dart';
 export 'package:e_movie/presentation/bloc/nowshowing/nowshowing_bloc.dart';
 export 'package:e_movie/presentation/bloc/popular/popular_bloc.dart';
+export 'package:e_movie/presentation/bloc/cast/cast_bloc.dart';
+export 'package:e_movie/presentation/bloc/movieDetails/movie_details_bloc.dart';
+export 'package:e_movie/presentation/bloc/movieTrailer/movie_trailer_bloc.dart';
+export 'package:e_movie/presentation/bloc/similarMovie/similar_movie_bloc.dart';
+export 'package:e_movie/presentation/bloc/tvPopular/tv_popular_bloc.dart';
+export 'package:e_movie/presentation/bloc/tvTopRated/tv_top_rated_bloc.dart';
+export 'package:e_movie/presentation/bloc/bottom_nav_bar_bloc.dart';
+export 'package:e_movie/presentation/bloc/movieFilter/movie_filter_bloc.dart';
+export 'package:e_movie/presentation/bloc/moviePage/movie_page_bloc.dart';

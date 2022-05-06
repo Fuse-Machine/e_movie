@@ -1,12 +1,10 @@
-import 'package:e_movie/data/repositories/movie_repository.dart';
-import 'package:e_movie/presentation/bloc/SimilarMovie/similar_movie_bloc.dart';
-import 'package:e_movie/presentation/bloc/cast/cast_bloc.dart';
-import 'package:e_movie/presentation/view/movie_details_view.dart';
+import 'package:e_movie/data/repositories/repositories.dart';
+import 'package:e_movie/presentation/bloc/bloc.dart';
+import 'package:e_movie/presentation/view/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/datasources/urls.dart';
-import '../../data/models/movie.dart';
-import '../bloc/movieDetails/movie_details_bloc.dart';
+import '../../data/models/models.dart';
 
 // ignore: must_be_immutable
 class MovieList extends StatelessWidget {
@@ -49,23 +47,19 @@ class MovieList extends StatelessWidget {
                                       ),
                                   ),
                                   BlocProvider<SimilarMovieBloc>(
-                                    create: (context) => SimilarMovieBloc(
-                                        repository: MovieRepository())
-                                      ..add(
-                                        FetchSimilarMovie(id: movie[index].id),
-                                      ),
-                                  ),
-
+                                      create: (context) => SimilarMovieBloc(
+                                          repository: MovieRepository())
+                                        ..add(FetchSimilarMovie(
+                                            id: movie[index].id))),
                                   BlocProvider<CastBloc>(
-                                    create: (context) => CastBloc(
-                                        repository: MovieRepository())
-                                      ..add(
-                                        FetchCast(id: movie[index].id),
-                                      ),
+                                    create: (context) =>
+                                        CastBloc(repository: MovieRepository())
+                                          ..add(
+                                            FetchCast(id: movie[index].id),
+                                          ),
                                   ),
                                 ],
-                                child:
-                                    MovieDetailsView(movieId: movie[index].id),
+                                child: const MovieDetailsView(),
                               ),
                               // builder: (context) => BlocProvider(
                               //   create: (context) => MovieDetailsBloc(

@@ -1,11 +1,7 @@
 import 'package:e_movie/data/datasources/urls.dart';
-import 'package:e_movie/data/models/genre.dart';
-import 'package:e_movie/data/models/movie_details.dart';
-import 'package:e_movie/presentation/bloc/SimilarMovie/similar_movie_bloc.dart';
-import 'package:e_movie/presentation/bloc/cast/cast_bloc.dart';
-import 'package:e_movie/presentation/bloc/movieDetails/movie_details_bloc.dart';
-import 'package:e_movie/presentation/widgets/bottom_menu.dart';
-import 'package:e_movie/presentation/widgets/cast_list.dart';
+import 'package:e_movie/data/models/models.dart';
+import 'package:e_movie/presentation/bloc/bloc.dart';
+import 'package:e_movie/presentation/view/view.dart';
 import 'package:e_movie/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,8 +9,8 @@ import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class MovieDetailsView extends StatelessWidget {
-  int movieId;
-  MovieDetailsView({Key? key, required this.movieId}) : super(key: key);
+  //int movieId;
+  const MovieDetailsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +19,7 @@ class MovieDetailsView extends StatelessWidget {
         if (state is LoadingMovieDetails) {
           return const Loading();
         } else if (state is LoadedMovieDetails) {
-          return _movieDetailsViews(state.movieDetails);
+          return _movieDetailsViews(context, state.movieDetails);
           //return Text(state.movieDetails.genres.length.toString());
         } else if (state is ErroLoadingMovieDetails) {
           return Text(state.error);
@@ -34,9 +30,8 @@ class MovieDetailsView extends StatelessWidget {
     );
   }
 
-  _movieDetailsViews(MovieDetails movieDetails) {
+  _movieDetailsViews(BuildContext context, MovieDetails movieDetails) {
     return Scaffold(
-      bottomNavigationBar: const BottomMenu(),
       backgroundColor: Colors.grey,
       body: SingleChildScrollView(
         child: Column(
@@ -80,6 +75,22 @@ class MovieDetailsView extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Positioned(
+                    left: 10,
+                    top: 10,
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const FrontPage()));
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          size: 35,
+                          color: Colors.white,
+                        )),
+                  )
                 ],
               ),
             ),
@@ -130,7 +141,15 @@ class MovieDetailsView extends StatelessWidget {
                     ),
                   ),
                 ),
-                _getSimilarMovie(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      const Text('Casts'),
+                      _getSimilarMovie(),
+                    ],
+                  ),
+                ),
               ],
             ),
           ],
@@ -156,7 +175,7 @@ class MovieDetailsView extends StatelessWidget {
                 child: Text(
                   e.name,
                   style: const TextStyle(
-                    fontSize: 15,
+                    fontSize: 13,
                     height: 1.5,
                   ),
                 ),
@@ -212,7 +231,7 @@ class MovieDetailsView extends StatelessWidget {
 
   _getSimilarMovie() {
     return BlocBuilder<SimilarMovieBloc, SimilarMovieState>(
-      builder: (context, state) {
+      builder: (_, state) {
         if (state is LoadingSimilarMovie) {
           return const Loading();
         } else if (state is LoadedSimilarMovie) {
@@ -227,7 +246,7 @@ class MovieDetailsView extends StatelessWidget {
 
   _getCast() {
     return BlocBuilder<CastBloc, CastState>(
-      builder: (context, state) {
+      builder: (_, state) {
         if (state is LoadingCast) {
           return const Loading();
         } else if (state is LoadedCast) {
@@ -239,4 +258,42 @@ class MovieDetailsView extends StatelessWidget {
       },
     );
   }
+
+  // _getTrailer() {
+  //   return BlocBuilder<MovieTrailerBloc, MovieTrailerState>(
+  //     builder: (context, state) {
+  //       if (state is LoadingMovieTrailer) {
+  //         return const Loading();
+  //       } else if (state is LoadedMovieTrailer) {
+  //        return YoutubePlayer(
+  //           controller: YoutubePlayerController(
+  //             initialVideoId: state.movieTrailer[0].key,
+  //             flags: const YoutubePlayerFlags(
+  //               autoPlay: true,
+  //               mute: true,
+  //             ),
+  //           ),
+  //         );
+  //         //log(Urls.youtubeUrl + "?v=$key");
+  //         //_getTrailerLink(state.movieTrailer);
+  //       } else if (state is ErrorLoadingMovieTrailer) {
+  //         log(state.error);
+  //         return Text(state.error);
+  //       }
+  //       return const SizedBox.shrink();
+  //     },
+  //   );
+  // }
+
+  // _getYoutubeView(String key) {
+  //   return YoutubePlayer(
+  //     controller: YoutubePlayerController(
+  //       initialVideoId: key,
+  //       flags: const YoutubePlayerFlags(
+  //         autoPlay: true,
+  //         mute: true,
+  //       ),
+  //     ),
+  //   );
+  // }
 }

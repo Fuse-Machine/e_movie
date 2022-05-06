@@ -1,5 +1,4 @@
 import 'package:e_movie/presentation/bloc/bloc.dart';
-
 import 'package:e_movie/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +10,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
+        
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _upComingMovie(),
@@ -41,6 +41,24 @@ class MyHomePage extends StatelessWidget {
             ),
           ),
           _allTimeTopRated(),
+          const SizedBox(height: 15),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Popular Tv Shows',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+          _popularTV(),
+          const SizedBox(height: 15),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Top Rated Tv Shows',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+          _topRatedTV(),
         ],
       ),
     );
@@ -100,5 +118,33 @@ class MyHomePage extends StatelessWidget {
       }
       return const Loading();
     }));
+  }
+
+  _popularTV() {
+    return BlocBuilder<TvPopularBloc, TvPopularState>(
+        builder: ((context, state) {
+      if (state is LoadingPopularTv) {
+        return const Loading();
+      } else if (state is ErrorLoadingPopularTv) {
+        return Text(state.error);
+      } else if (state is LoadedPopularTv) {
+        return TvShowList(tvShow: state.tvShow);
+      }
+      return const Loading();
+    }));
+  }
+
+  _topRatedTV() {
+    return BlocBuilder<TvTopRatedBloc, TvTopRatedState>(
+        builder: (context, state) {
+      if (state is LoadingTvTopRated) {
+        return const Loading();
+      } else if (state is LoadedTvTopRated) {
+        return TvShowList(tvShow: state.tvShow);
+      } else if (state is ErrorLoadingTvTopRated) {
+        return Text(state.error);
+      }
+      return const SizedBox.shrink();
+    });
   }
 }
