@@ -13,7 +13,7 @@ class MoviesPage extends StatelessWidget {
         if (state is LoadingMovie) {
           return const Loading();
         } else if (state is LoadedMovie) {
-          return MovieListGridview(movie: state.movie, totalPages: state.totalPage, genre: state.genre,);
+          return MovieListGridview(movie: state.movies, genre: state.genre,);
         } else if (state is ErrorLoadingMovie) {
           return Text(state.error);
         }

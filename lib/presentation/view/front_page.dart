@@ -30,7 +30,7 @@ class _FrontPageState extends State<FrontPage> {
               return BlocProvider<MoviePageBloc>(
                 create: (context) => MoviePageBloc(repository: MovieRepository())
                   ..add(
-                    FetchMovie(),
+                    FetchMovie(pageNumber: 1),
                   ),
                   child: const MoviesPage(),
               );

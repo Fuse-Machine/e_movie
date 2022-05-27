@@ -9,10 +9,9 @@ class LoadingMovie extends MoviePageState {}
 
 // ignore: must_be_immutable
 class LoadedMovie extends MoviePageState {
-  int totalPage;
   List<Genre> genre;
-  List<Movie> movie;
-  LoadedMovie({required this.movie, required this.totalPage,required this.genre});
+  List<Movie> movies;
+  LoadedMovie({required this.movies, required this.genre});
 }
 
 // ignore: must_be_immutable
